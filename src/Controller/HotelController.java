@@ -66,6 +66,7 @@ public class HotelController {
         System.out.println("Hotel address set: " + hotelAddress + "\n");
 
         storage.hotelStorage.put(entriesCounter, model);
+        storage.saveToCSV();
         return model;
     }
 

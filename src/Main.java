@@ -10,11 +10,6 @@ public class Main {
     static int entriesCounter = 0;
     static HotelStorage storage = new HotelStorage();
 
-//    public static void createHotel(Scanner input, HotelController controller) {
-//
-//        entriesCounter++;
-//    }
-
     public static void main(String[] args) throws Exception {
 
         Hotel model = new Hotel(); // create a model instance
