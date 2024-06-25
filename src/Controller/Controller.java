@@ -49,6 +49,17 @@ public class Controller<ModelType> {
                 user.setUsername(newValues[0]);
                 user.setPassword(newValues[1]);
                 user.setRole(newValues[2]);
+            } else if (instanceToUpdate instanceof Booking && newValues.length >= 5) {
+                Booking booking = (Booking) instanceToUpdate;
+                booking.setHotelId(Integer.parseInt(newValues[0]));
+                booking.setUserId(Integer.parseInt(newValues[1]));
+                booking.setRoomId(Integer.parseInt(newValues[2]));
+                booking.setStartDate(newValues[3]);
+                booking.setEndDate(newValues[4]);
+                // Обновите статус бронирования, если передано достаточное количество значений
+                if (newValues.length == 6) {
+                    booking.setBookingStatus(Booking.BookingStatus.valueOf(newValues[5]));
+                }
             } else {
                 System.out.println("Invalid number of new values or incorrect instance type.");
                 return;
@@ -105,18 +116,31 @@ public class Controller<ModelType> {
         return userController;
     }
 
-    private static Controller<Booking> getBookingController() {
+    public static Controller<Booking> getBookingController() {
         if (bookingController == null) {
             bookingStorage = new Storage<>(
                     "src/Data/bookings.csv",
                     line -> {
                         Booking booking = new Booking();
                         booking.setBookingId(Integer.parseInt(line[0]));
-                        booking.setBookingStatus(Booking.Status.valueOf(line[1]));
+                        booking.setBookingStatus(Booking.BookingStatus.valueOf(line[1]));
+                        booking.setHotelId(Integer.parseInt(line[2]));
+                        booking.setUserId(Integer.parseInt(line[3]));
+                        booking.setRoomId(Integer.parseInt(line[4]));
+                        booking.setStartDate(line[5]);
+                        booking.setEndDate(line[6]);
                         return booking;
                     },
-                    booking -> new String[]{String.valueOf(booking.getBookingId())},
-                    new String[]{"Booking ID", "Booking status"}
+                    booking -> new String[]{
+                            String.valueOf(booking.getBookingId()),
+                            booking.getBookingStatus().toString(),
+                            String.valueOf(booking.getHotelId()),
+                            String.valueOf(booking.getUserId()),
+                            String.valueOf(booking.getRoomId()),
+                            booking.getStartDate(),
+                            booking.getEndDate()
+                    },
+                    new String[]{"Booking ID", "Booking status", "Hotel ID", "User ID", "Room ID", "Start Date", "End Date"}
             );
             bookingController = new Controller<Booking>(bookingStorage);
         }
