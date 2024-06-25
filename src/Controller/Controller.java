@@ -2,6 +2,7 @@ package Controller;
 
 import Model.Booking;
 import Model.Hotel;
+import Model.Room;
 import Model.User;
 import Storage.Storage;
 
@@ -17,6 +18,9 @@ public class Controller<ModelType> {
 
     private static Storage<Booking> bookingStorage;
     private static Controller<Booking> bookingController;
+
+    private static Storage<Room> roomStorage;
+    private static Controller<Room> roomController;
 
     private final Storage<ModelType> storage;
 
@@ -145,5 +149,30 @@ public class Controller<ModelType> {
             bookingController = new Controller<Booking>(bookingStorage);
         }
         return bookingController;
+    }
+
+    public static Controller<Room> getRoomController() {
+        if (roomStorage == null) {
+            roomStorage = new Storage<>(
+                    "src/Data/room.csv",
+                    line -> {
+                        Room room = new Room();
+                        room.setRoomId(Integer.parseInt(line[0]));
+                        room.setHotelId(Integer.parseInt(line[1]));
+                        room.setRoomType(line[2]);
+                        room.setStatus(Room.RoomStatus.valueOf(line[3]));
+                        return room;
+                    },
+                    room -> new String[]{
+                        String.valueOf(room.getRoomId()),
+                        String.valueOf(room.getHotelId()),
+                        room.getRoomType(),
+                        room.getStatus().toString()
+                    },
+                    new String[]{"Room ID", "Hotel ID", "Room type", "Room status"}
+            );
+            roomController = new Controller<Room>(roomStorage);
+        }
+        return roomController;
     }
 }

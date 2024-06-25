@@ -8,9 +8,7 @@ import java.util.Comparator;
 import java.util.Map;
 import java.util.Scanner;
 
-import static Controller.Controller.getHotelController;
-import static Controller.Controller.getUserController;
-import static Controller.Controller.getBookingController;
+import static Controller.Controller.*;
 
 public class MainView {
     private final Scanner input = new Scanner(System.in);
@@ -413,6 +411,31 @@ public class MainView {
         };
 
         getBookingController().updateInstanceById(bookingIdToUpdate, updatedValues);
+    }
+
+    private boolean validateBookingConfirmation(Booking booking) {
+        // Implement logic to check if there are available rooms for the selected dates
+        // This will depend on the current status of rooms and their availability
+        // Example logic:
+        Room room = getRoomController().getInstanceById(booking.getRoomId());
+        return room.getStatus() == Room.RoomStatus.FREE;
+    }
+
+    private void updateRoomStatus(int roomId, Room.RoomStatus status) {
+        // Implement logic to update the room status
+        Room roomToUpdate = getRoomController().getInstanceById(roomId);
+        if (roomToUpdate != null) {
+            roomToUpdate.setStatus(status);
+            getRoomController().updateInstanceById(roomId, new String[]{"status"});
+        } else {
+            System.out.println("Wrong room id or room with this id does not exist");
+        }
+    }
+
+    private void refundGuest(Booking booking) {
+        // Implement logic to refund the guest if booking is canceled or denied
+        // This may involve financial transactions or adjustments
+        // For simulation purposes, we'll assume no refunds (based on the provided requirements).
     }
 
 }

@@ -1,11 +1,14 @@
 package Model;
 
+import java.util.List;
+
 public class Booking {
     public enum BookingStatus {
-        BOOKED,
+        PENDING,
         CONFIRMED,
         CANCELED,
-        DENIED
+        DENIED,
+        COMPLETED
     }
 
     private int bookingId;
@@ -15,6 +18,11 @@ public class Booking {
     private String startDate;
     private String endDate;
     private BookingStatus bookingStatus;
+    private List<String> additionalServices;
+    private double totalPrice;
+
+    // Конструкторы, геттеры и сеттеры
+    public Booking() {}
 
     public int getBookingId() {
         return bookingId;
@@ -70,5 +78,21 @@ public class Booking {
 
     public void setBookingStatus(BookingStatus bookingStatus) {
         this.bookingStatus = bookingStatus;
+    }
+
+    public List<String> getAdditionalServices() {
+        return additionalServices;
+    }
+
+    public void setAdditionalServices(List<String> additionalServices) {
+        this.additionalServices = additionalServices;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
     }
 }
