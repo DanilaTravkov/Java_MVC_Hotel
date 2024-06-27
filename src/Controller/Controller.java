@@ -87,7 +87,7 @@ public class Controller<ModelType> {
                     "src/Data/hotels.csv",
                     line -> {
                         Hotel hotel = new Hotel();
-                        hotel.setHotelId(Integer.parseInt(line[0])); // Установка числового ID из CSV
+                        hotel.setHotelId(Integer.parseInt(line[0].isEmpty() ? "0" : line[0])); // Установка числового ID из CSV
                         hotel.setHotelName(line[1]);
                         hotel.setHotelAddress(line[2]);
                         return hotel;
@@ -106,7 +106,7 @@ public class Controller<ModelType> {
                     "src/Data/users.csv",
                     line -> {
                         User user = new User();
-                        user.setId(Integer.parseInt(line[0])); // Установка числового ID из CSV
+                        user.setId(Integer.parseInt(line[0].isEmpty() ? "0" : line[0])); // Установка числового ID из CSV
                         user.setUsername(line[1]);
                         user.setPassword(line[2]);
                         user.setRole(line[3]);
@@ -126,7 +126,7 @@ public class Controller<ModelType> {
                     "src/Data/bookings.csv",
                     line -> {
                         Booking booking = new Booking();
-                        booking.setBookingId(Integer.parseInt(line[0]));
+                        booking.setBookingId(Integer.parseInt(line[0].isEmpty() ? "0" : line[0]));
                         booking.setBookingStatus(Booking.BookingStatus.valueOf(line[1]));
                         booking.setHotelId(Integer.parseInt(line[2]));
                         booking.setUserId(Integer.parseInt(line[3]));
@@ -157,19 +157,21 @@ public class Controller<ModelType> {
                     "src/Data/room.csv",
                     line -> {
                         Room room = new Room();
-                        room.setRoomId(Integer.parseInt(line[0]));
+                        room.setRoomId(Integer.parseInt(line[0].isEmpty() ? "0" : line[0]));
                         room.setHotelId(Integer.parseInt(line[1]));
-                        room.setRoomType(line[2]);
-                        room.setStatus(Room.RoomStatus.valueOf(line[3]));
+                        room.setCleanerId(Integer.parseInt(line[2]));
+                        room.setRoomType(Room.RoomType.valueOf(line[3]));
+                        room.setStatus(Room.RoomStatus.valueOf(line[4]));
                         return room;
                     },
                     room -> new String[]{
                         String.valueOf(room.getRoomId()),
                         String.valueOf(room.getHotelId()),
-                        room.getRoomType(),
-                        room.getStatus().toString()
+                        String.valueOf(room.getCleanerId()),
+                        String.valueOf(room.getRoomType()),
+                        String.valueOf(room.getStatus())
                     },
-                    new String[]{"Room ID", "Hotel ID", "Room type", "Room status"}
+                    new String[]{"Room ID", "Hotel ID", "Cleaner ID", "Room type", "Room status"}
             );
             roomController = new Controller<Room>(roomStorage);
         }

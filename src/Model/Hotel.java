@@ -1,7 +1,5 @@
 package Model;
 
-import java.util.UUID;
-
 public class Hotel {
     private int hotelId;
     private String hotelName;

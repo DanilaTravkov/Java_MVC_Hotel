@@ -19,7 +19,6 @@ public class User {
     private int experienceYears;
     private double salary;
 
-    // Конструкторы, геттеры и сеттеры
     public User() {}
 
     public int getId() {

@@ -1,14 +1,21 @@
 package Model;
 
 public class Room {
+
     public enum RoomStatus {
         CLEANING,
         FREE,
         OCCUPIED
     }
+
+    public enum RoomType {
+        SINGLE,
+        DOUBLE
+    }
     private int roomId;
     private int hotelId;
-    private String roomType;
+    private int cleanerId;
+    private RoomType roomType;
     private RoomStatus status;
 
     // Конструкторы, геттеры и сеттеры
@@ -22,6 +29,14 @@ public class Room {
         this.roomId = roomId;
     }
 
+    public int getCleanerId() {
+        return cleanerId;
+    }
+
+    public void setCleanerId(int cleanerId) {
+        this.cleanerId = cleanerId;
+    }
+
     public int getHotelId() {
         return hotelId;
     }
@@ -30,11 +45,11 @@ public class Room {
         this.hotelId = hotelId;
     }
 
-    public String getRoomType() {
+    public RoomType getRoomType() {
         return roomType;
     }
 
-    public void setRoomType(String roomType) {
+    public void setRoomType(RoomType roomType) {
         this.roomType = roomType;
     }
 

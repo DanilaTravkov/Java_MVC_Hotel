@@ -44,7 +44,7 @@ public class Storage<ModelType> {
                     continue;
                 }
                 ModelType model = fromCSVLine.apply(line);
-                storage.put(Integer.parseInt(line[0]), model);
+                storage.put(Integer.parseInt(line[0].isEmpty() ? "0" : line[0]), model);
             }
         } catch (IOException | CsvValidationException e) {
             e.printStackTrace();
